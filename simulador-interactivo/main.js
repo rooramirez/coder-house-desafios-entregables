@@ -1,20 +1,3 @@
-//DESAFIO ENTREGABLE 1
-
-// Calcular nota final de alumnos ingresados. 
-
-// let nota1 = Number(prompt('ingrese nota 1:'));
-// let nota2 = Number(prompt('ingrese nota 2:'));
-// let nota3 = Number(prompt('ingrese nota 3:'));
-// let nota4 = Number(prompt('ingrese nota 4:'));
-
-// const sumaNotas = (nota1, nota2, nota3, nota4) => nota1 + nota2 + nota3 + nota4;
-
-// const calcularPromedio = (totalNotas, cantNotas) => totalNotas / cantNotas; 
-
-// let promedioNotas = calcularPromedio(sumaNotas(nota1, nota2, nota3, nota4), 4);
-
-// console.log(promedioNotas);
-
 
 //-----------------------------------------------proyecto final------------------------------------------------------
 
@@ -28,11 +11,11 @@ const arrayCompras = [];
 
 //declaracion de clase constructora Tarea
 class Tarea{
-    constructor(nombre, descripcion, seccion, recurrencia, responsable) {
+    constructor(nombre, descripcion, seccion, frecuencia, responsable) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.seccion = seccion;
-        this.recurrencia = recurrencia;
+        this.frecuencia = frecuencia;
         this.responsable = responsable;
     }
 
@@ -41,7 +24,7 @@ class Tarea{
         \n nombre: ${this.nombre}
         \n descripcion: ${this.descripcion}
         \n seccion: ${this.seccion}
-        \n recurrencia: ${this.recurrencia}
+        \n frecuencia: ${this.frecuencia}
         \n responsable: ${this.responsable}`;
     }
 }
@@ -67,21 +50,29 @@ const agregarTarea = () => {
     let nombreTarea = prompt('Ingrese nombre de la tarea:');
     let descripcionTarea = prompt('Ingrese descripcion de la tarea:');
     let seccionTarea = prompt('Ingrese tipo/ seccion de tarea:');
-    let recurrenciaTarea = prompt('Ingrese la frecuencia de la tarea:');
+    let frecuenciaTarea = prompt('Ingrese la frecuencia de la tarea:');
     let responsableTarea = prompt('Ingrese el responsable de la tarea:');
-    arrayTareas.push(new Tarea(nombreTarea, descripcionTarea, seccionTarea, recurrenciaTarea, responsableTarea));
+    arrayTareas.push(new Tarea(nombreTarea, descripcionTarea, seccionTarea, frecuenciaTarea, responsableTarea));
 }
 
 const verListaTarea = () => {
     console.log(arrayTareas);
 }
 
+//funcion para eliminar elemento de la lista:
+
 const modificarListaTarea = () => {
-    let modificarLista = Number(prompt('para eliminar una tarea, indique el numero de la misma:'));
-    let borrarTarea = arrayTareas.slice(modificarLista, 1);
-    borrarTarea;
-    console.log(`se modifico con exito la lista de tareas ${arrayTareas}`);
+    let eliminarElemento = prompt('para eliminar una tarea, indique el nombre de la misma:');
+    for (const tarea of  arrayTareas) {
+        if(tarea.nombre === eliminarElemento){
+            let indexTarea = arrayTareas.indexOf(tarea);
+            arrayTareas.splice(indexTarea, 1);
+            console.log(`se modifico con exito la lista de tareas`);
+            console.log(arrayTareas);
+        }
+    }
 }
+//---------------------------fin de la funcion-----------
 
 const agregarElementoAListaCompras = () => {
     let producto = prompt('Ingrese nombre del producto:');
@@ -94,17 +85,24 @@ const verListaCompras = () => {
 }
 
 const modificarListaCompras = () => {
-    let modificarLista = Number(prompt('Para eliminar una tarea, indique que numero de la misma:'));
-    arrayCompras.slice(modificarLista, 1);
-    console.log(`se modifico con exito la lista de compras ${arrayCompras}`);
-}
+    let modificarLista = prompt('Para eliminar una compra, indique producto es de la misma:');
 
+    for (const compra of arrayCompras) {
+        if(compra.producto === modificarLista){
+            let indexCompras = arrayCompras.indexOf(compra);
+            console.log(indexCompras);
+            arrayCompras.splice(indexCompras, 1);
+            console.log(arrayCompras);
+            console.log(`se modifico con exito la lista de compras ${arrayCompras}`);
+        }
+    }
+}
 
 //inicio de la aplicacion:
 let bienvenida = console.log('Bienvenido a la aplicacion web "Armonía Familiar", destinado a la organizacion y division de tareas equitativamente.');
 
 while (ingresoALaAplicacion != 0) {
-    ingresoALaAplicacion = Number(prompt('¿Que desea hacer? Ingrese: 1 para agregar una tarea, 2 para ver lista de tareas, 3 para modificar la lista de tareas, 4 para agregar un elemento a la lista de compras, 5 para ver la lista de compras, 6 para modificar la lista de compras o ingrese 0 (cero) para finalizar el programa.'));
+    ingresoALaAplicacion = Number(prompt('¿Que desea hacer? Ingrese: \n 1 para agregar una tarea, \n 2 para ver lista de tareas, \n 3 para modificar la lista de tareas, \n 4 para agregar un elemento a la lista de compras, \n 5 para ver la lista de compras, \n 6 para modificar la lista de compras \n o ingrese 0 (cero) para finalizar el programa.'));
     
     switch (ingresoALaAplicacion) {
         case 1:
