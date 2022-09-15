@@ -6,8 +6,8 @@
 
 //Variables: 
 let ingresoALaAplicacion;
-const arrayTareas = [];
-const arrayCompras = [];
+let arrayTareas = [];
+let arrayCompras = [];
 
 //declaracion de clase constructora Tarea
 class Tarea{
@@ -61,18 +61,36 @@ const verListaTarea = () => {
 
 //funcion para eliminar elemento de la lista:
 
-const modificarListaTarea = () => {
-    let eliminarElemento = prompt('para eliminar una tarea, indique el nombre de la misma:');
-    for (const tarea of  arrayTareas) {
-        if(tarea.nombre === eliminarElemento){
-            let indexTarea = arrayTareas.indexOf(tarea);
-            arrayTareas.splice(indexTarea, 1);
-            console.log(`se modifico con exito la lista de tareas`);
-            console.log(arrayTareas);
-        }
-    }
-}
+// const modificarListaTarea = () => {
+//     let eliminarElemento = prompt('para eliminar una tarea, indique el nombre de la misma:');
+//     for (const tarea of  arrayTareas) {
+//         if(tarea.nombre === eliminarElemento){
+//             let indexTarea = arrayTareas.indexOf(tarea);
+//             arrayTareas.splice(indexTarea, 1);
+//             console.log(`se modifico con exito la lista de tareas`);
+//             console.log(arrayTareas);
+//         }
+//     }
+// }
 //---------------------------fin de la funcion-----------
+
+//funcion de orden superior para eliminar tarea de la lista:
+const arrayTareasCompletadas = [];
+const eliminarTarea = () => {
+
+    let tareaAEliminar = prompt('para eliminar una tarea, indique el nombre de la misma:');
+    arrayTareas = arrayTareas.filter(tarea => {
+        if(tarea.nombre === tareaAEliminar){
+            arrayTareasCompletadas.push(tarea);
+            return false;
+        }
+        return true;
+        });
+    console.log(arrayTareas);    
+
+}
+
+//-----fin de la funcion de orden superior-----
 
 const agregarElementoAListaCompras = () => {
     let producto = prompt('Ingrese nombre del producto:');
@@ -84,20 +102,35 @@ const verListaCompras = () => {
     console.log(arrayCompras);
 }
 
+// const modificarListaCompras = () => {
+//     let modificarLista = prompt('Para eliminar una compra, indique producto es de la misma:');
+
+//     for (const compra of arrayCompras) {
+//         if(compra.producto === modificarLista){
+//             let indexCompras = arrayCompras.indexOf(compra);
+//             console.log(indexCompras);
+//             arrayCompras.splice(indexCompras, 1);
+//             console.log(arrayCompras);
+//             console.log(`se modifico con exito la lista de compras ${arrayCompras}`);
+//         }
+//     }
+// }
+
+//f/////////uncion de orden superior:
+const arrayProductosEliminados = [];
+
 const modificarListaCompras = () => {
-    let modificarLista = prompt('Para eliminar una compra, indique producto es de la misma:');
-
-    for (const compra of arrayCompras) {
-        if(compra.producto === modificarLista){
-            let indexCompras = arrayCompras.indexOf(compra);
-            console.log(indexCompras);
-            arrayCompras.splice(indexCompras, 1);
-            console.log(arrayCompras);
-            console.log(`se modifico con exito la lista de compras ${arrayCompras}`);
+    let eliminarProducto = prompt('Para eliminar una compra, indique producto es de la misma:');
+    arrayCompras = arrayCompras.filter(compra => {
+        if(compra.producto === eliminarProducto){
+            arrayProductosEliminados.push(compra);
+            return false;
         }
-    }
+        return true;
+    });
+    console.log(arrayCompras);
 }
-
+////////fin de la funcion de orden superior///////////
 //inicio de la aplicacion:
 let bienvenida = console.log('Bienvenido a la aplicacion web "Armonía Familiar", destinado a la organizacion y division de tareas equitativamente.');
 
@@ -122,8 +155,11 @@ while (ingresoALaAplicacion != 0) {
                 console.log('aun no hay ninguna tarea en la lista, se encuentra vacía');
             }
             else{
-                modificarListaTarea();
-            }
+                eliminarTarea();
+                alert('la tarea se borro con exito y se agrego a la lista de tareas realizadas');
+                console.log(`tareas realizadas: `);
+                console.log(arrayTareasCompletadas);
+            } 
             break;
         case 4:
             agregarElementoAListaCompras();
@@ -143,6 +179,9 @@ while (ingresoALaAplicacion != 0) {
             }
             else{
                 modificarListaCompras();
+                alert('el producto se borro con exito y se agrego a la lista de productos eliminados');
+                console.log(`productos eliminados: `);
+                console.log(arrayProductosEliminados);
             }
             break;
         default:
