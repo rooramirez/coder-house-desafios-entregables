@@ -1,7 +1,3 @@
-
-//-----------------------------------------------proyecto final------------------------------------------------------
-
-
 //Aplicacion Web: "Armonía familiar" - Lista de tareas: 
 
 //Variables: 
@@ -9,8 +5,22 @@ let ingresoALaAplicacion;
 let arrayTareas = [];
 let arrayCompras = [];
 
+//--------almacenar las listas en el local storage---------
+const guardarTareasLocalStorage = (arrayTareas) => {
+    localStorage.setItem('arrayTareas', JSON.stringify(arrayTareas));
+};
+
+///----obtener los datos en el local storage----
+// const obtenerTareasLocalStorage = () => {
+//     const tareaStorage = JSON.parse(localStorage.getItem('arrayTareas'));
+//     return tareaStorage;
+// };
+//--------fin de la funcion obtener datos storage-----
+
 //-------Obtener valores del formulario y mostrarlo----------
 const form = document.getElementById('formTarea');
+let container = document.getElementById('tareas');
+let divContainer = document.getElementById('divDeTareas');
 
 form.addEventListener('submit', valorFormulario);
 
@@ -25,12 +35,9 @@ function valorFormulario(e) {
     console.log(descripcion);
 
     arrayTareas.push(new Tarea(nombre, descripcion));
+    guardarTareasLocalStorage(arrayTareas);
 
      //-----------DOM--------
-
-    let container = document.getElementById('tareas');
-    let divContainer = document.getElementById('divDeTareas');
-
     divContainer.innerHTML = '';
 
     arrayTareas.forEach( tarea => {
@@ -39,18 +46,14 @@ function valorFormulario(e) {
         divTarea.innerHTML = `
         <p>Nombre de la tarea: ${tarea.nombre}.</p>
         <p>Descripcion  de la tarea: ${tarea.descripcion}.</p>
-        <p>Seccion  de la tarea: ${tarea.seccion}.</p>
-        <p>Frecuencia  de la tarea: ${tarea.frecuencia}.</p>
-        <p>Responsable  de la tarea: ${tarea.responsable}.</p>
+        <button class="btn btn-danger" name="delete" value="${tarea.nombre}">Borrar</button>
         `
 
         divContainer.appendChild(divTarea);
-        container.appendChild(divTarea);
+        container.appendChild(divContainer);
     });
  //-------------fin del DOM-------
 }
-
-
 
 ///-----obtener el valor del formulario y mostrarlo------
 const formCompra = document.getElementById('formCompra');
@@ -81,10 +84,35 @@ const valorFormularioCompra = (e) => {
         <p>Tipo de producto: ${compra.tipo}</p>
         `
         divContainer.appendChild(divCompra);
-        container.appendChild(divCompra);
+        container.appendChild(divContainer);
     });
     //---------fin DOM ------
 }
+
+//------se agrega un evento al form----
 formCompra.addEventListener('submit', valorFormularioCompra);
 
+//-------borra el texto que quedo en el formulario----
+document.getElementById('formTarea').reset();
 
+///--------agrego un evento click------
+divContainer.addEventListener('click', (e) => {
+    eliminarTarea(e.target.value);
+})
+
+// //-------agregar tarea al DOM----
+// document.addEventListener('DOMContentLoaded', () =>{
+//     if (localStorage.getItem('arrayTareas')) {
+//        arrayTareas = obtenerTareasLocalStorage();
+//     }
+// });
+
+//-----eliminar una tarea----------
+
+const eliminarTarea = (nombre) => {
+   arrayTareas = arrayTareas.forEach((tarea, index) => {
+        if(tarea.nombre === nombre){
+            arrayTareas.splice(index, 1);
+        }
+    });
+}
