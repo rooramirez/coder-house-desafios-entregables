@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     <!-- Bootstrap CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+     <!--CSS-->
+    <link rel="stylesheet" href="./hojaDeEstilo.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">
+                <img src="./icons/familia.svg" alt="Logo familia" width="30" height="24" class="d-inline-block align-text-top">
+              </a>
+            </div>
+          </nav>
+    </header>
+    <main class="container">
+        <h1 class="titulo">Armonía Familiar</h1>
+        <h3>Aplicacion web destinada a la organizacion familiar y division de las tareas equitativamente</h3>
+        <section id="tareas" class="container">
+            <h2>TAREAS</h2>
+            <form id="formTarea">
+                <input id="tareaNombre" type="text" name="nombreTarea"><br>
+                <textarea name="descripcion" id="descripcionTarea" cols="22" rows="5"></textarea><br>
+                <input type="submit" value="Enviar" >
+            </form>
+            <div id="divDeTareas"></div>
+        </section>
+        <section id="compras" class="container">
+            <h2>COMPRAS</h2>
+            <form id="formCompra">
+                <input type="text" name="nombreProducto"><br>
+                <input type="text" name="tipoProducto" ><br>
+                <input type="submit" value="Enviar" >
+            </form>
+            <div id="divDeCompras"></div>
+        </section>
+    </main>
+    <footer></footer>
+
+    <script src="./js/main.js"></script>
+    <script src="./js/constructor.js"></script>
+</body>
+</html>
