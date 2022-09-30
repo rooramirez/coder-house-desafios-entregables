@@ -49,19 +49,15 @@ function valorFormulario(e) {
     const formulario = new FormData(form);
     const nombre = formulario.get('nombreTarea');
     const descripcion = formulario.get('descripcion');
-
-    console.log(nombre);
-    console.log(descripcion);
-
+    
     arrayTareas.push(new Tarea(nombre, descripcion));
     guardarTareasLocalStorage(arrayTareas);
     renderTareas();
-
+    //-------borra el texto que quedo en el formulario----
+    form.reset();
 }
-renderTareas();
 
-//-------borra el texto que quedo en el formulario----
-document.getElementById('formTarea').reset();
+renderTareas();
 
 ///--------agrego un evento click------
 divContainer.addEventListener('click', (e) => {
@@ -79,6 +75,28 @@ const eliminarTarea = (nombre) => {
     });
     renderTareas();
 }
+
+//-------validar form tareas-----------
+
+const btnGuardarTarea = document.getElementById('btnGuardarTarea');
+const inputNombreTarea = document.getElementById('tareaNombre');
+const inputDescripcion = document.getElementById('descripcionTarea');
+
+btnGuardarTarea.disabled = true;
+
+const validarFormTarea = () => {
+    if ((inputNombreTarea.value && inputNombreTarea.value !== '') &&
+     (inputDescripcion.value && inputDescripcion.value !== '')) {
+        btnGuardarTarea.disabled = false;
+    } else {
+        btnGuardarTarea.disabled = true;
+    }
+}
+
+///////------------se agrega un evento al form Tarea (validar form)-------------
+form.addEventListener('keypress', validarFormTarea);
+
+///-------fin de validacion del formulario-------------
 
 ///-----------------COMPRAS------------------
 
@@ -125,33 +143,22 @@ const valorFormularioCompra = (e) => {
     const nombreProducto = formulario.get('nombreProducto');
     const tipoProducto = formulario.get('tipoProducto');
 
-    console.log(nombreProducto);
-    console.log(tipoProducto);
-
     arrayCompras.push(new Compras(nombreProducto, tipoProducto));
     guardarComprasLocalStorage(arrayCompras);
     renderCompras();
+    //-------borra el texto que quedo en el formulario----
+    formCompra.reset();
 }
 
 //------se agrega un evento al form----
 formCompra.addEventListener('submit', valorFormularioCompra);
 renderCompras();
 
-//-------borra el texto que quedo en el formulario----
-document.getElementById('formCompra').reset();
-
 ///--------agrego un evento click------
 
 divContainerCompra.addEventListener('click', (e) => {
     eliminarCompra(e.target.value);
 });
-
-// //-------agregar tarea al DOM----
-// document.addEventListener('DOMContentLoaded', () =>{
-//     if (localStorage.getItem('arrayTareas')) {
-//        arrayTareas = obtenerTareasLocalStorage();
-//     }
-// });
 
 //-----eliminar una Compra----------
 const eliminarCompra = (producto) => {
@@ -162,4 +169,24 @@ const eliminarCompra = (producto) => {
         guardarComprasLocalStorage(arrayCompras);
     });
     renderCompras();
-}
+};
+
+//-------Validar form compra---------
+const btnGuardarCompra = document.getElementById('btnGuardarCompra');
+const inputNombreCompra = document.getElementById('inputNombreCompra');
+const inputTipoProducto = document.getElementById('inputTipoProducto');
+
+btnGuardarCompra.disabled = true;
+
+const validarFormCompra = () => {
+    if ((inputNombreCompra.value && inputNombreCompra.value !== '') &&
+     (inputTipoProducto.value && inputTipoProducto.value !== '')) {
+        btnGuardarCompra.disabled = false;
+    }
+    else {
+        btnGuardarCompra.disabled = true;
+    }
+};
+
+//-------------se agrega un evento al al form (validar formulario)---------
+formCompra.addEventListener('keypress', validarFormCompra);
