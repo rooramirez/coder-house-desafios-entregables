@@ -1,5 +1,9 @@
 //Aplicacion Web: "Armonía familiar" - Lista de tareas: 
 
+//---luxon----
+const DateTime = luxon.DateTime;
+const Interval = luxon.Interval;
+
 //Variables: 
 let ingresoALaAplicacion;
 let arrayTareas = [];
@@ -15,17 +19,45 @@ const renderTareas = () => {
     arrayTareas = obtenerTareasLocalStorage();
     arrayTareas.forEach( tarea => {
         let divTarea = document.createElement('div');
+        let { nombre, descripcion } = tarea;
         divTarea.classList.add('elementoLista');
         divTarea.innerHTML = `
-        <p>Nombre de la tarea: ${tarea.nombre}.</p>
-        <p>Descripcion  de la tarea: ${tarea.descripcion}.</p>
-        <button class="btn btn-danger" name="delete" value="${tarea.nombre}">Borrar</button>
+        <p>Nombre de la tarea: ${nombre}.</p>
+        <p>Descripcion  de la tarea: ${descripcion}.</p>
+        <p>Dias restantes para finalizar la tarea:.</p>
+        <button class="btn btn-danger" name="delete" id="${nombre}" value="${nombre}">Borrar</button>
         `
         divContainer.appendChild(divTarea);
         container.appendChild(divContainer);
+
+         //---------- sweetAlert
+
+        const btn = document.getElementById(nombre);
+
+        btn.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Estas seguro?',
+                text: 'va a eliminar la tarea',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    eliminarTarea(nombre);
+                    Swal.fire(
+                        'Eliminado',
+                        'La tarea ha sido borrada',
+                        'success'
+                    )
+                }
+            })
+        })
+        //---fin sweetAlert
     });
      //-------------fin del DOM-------
 }
+
 //--------almacenar las listas en el local storage---------
 const guardarTareasLocalStorage = (arrayTareas) => {
     localStorage.setItem('arrayTareas', JSON.stringify(arrayTareas));
@@ -49,20 +81,17 @@ function valorFormulario(e) {
     const formulario = new FormData(form);
     const nombre = formulario.get('nombreTarea');
     const descripcion = formulario.get('descripcion');
+    const fechaLimite = formulario.get('fechaTarea');
     
-    arrayTareas.push(new Tarea(nombre, descripcion));
+    arrayTareas.push(new Tarea(nombre, descripcion, fechaLimite));
     guardarTareasLocalStorage(arrayTareas);
     renderTareas();
     //-------borra el texto que quedo en el formulario----
     form.reset();
+    btnGuardarTarea.disabled = true;
 }
 
 renderTareas();
-
-///--------agrego un evento click------
-divContainer.addEventListener('click', (e) => {
-    eliminarTarea(e.target.value);
-});
 
 //-----eliminar una tarea----------
 
@@ -85,16 +114,13 @@ const inputDescripcion = document.getElementById('descripcionTarea');
 btnGuardarTarea.disabled = true;
 
 const validarFormTarea = () => {
-    if ((inputNombreTarea.value && inputNombreTarea.value !== '') &&
-     (inputDescripcion.value && inputDescripcion.value !== '')) {
-        btnGuardarTarea.disabled = false;
-    } else {
-        btnGuardarTarea.disabled = true;
-    }
+    const x = inputNombreTarea.value === '' ? true : false;
+    const y = inputDescripcion.value === '' ? true : false;
+    btnGuardarTarea.disabled = x || y;
 }
 
 ///////------------se agrega un evento al form Tarea (validar form)-------------
-form.addEventListener('keypress', validarFormTarea);
+form.addEventListener('keyup', validarFormTarea);
 
 ///-------fin de validacion del formulario-------------
 
@@ -106,14 +132,40 @@ const renderCompras = () => {
     arrayCompras = obtenerComprasLocalStorage();
     arrayCompras.forEach( compra => {
         let divCompra = document.createElement('div');
+        let { producto, tipo } = compra;
         divCompra.classList.add('elementoLista');
         divCompra.innerHTML = `
-        <p>Producto: ${compra.producto}</p>
-        <p>Tipo de producto: ${compra.tipo}</p>
-        <button class="btn btn-danger" name="delete" value="${compra.producto}">Borrar</button>
+        <p>Producto: ${producto}</p>
+        <p>Tipo de producto: ${tipo}</p>
+        <button class="btn btn-danger" id="${producto}" name="delete" value="${producto}">Borrar</button>
         `
         divContainerCompra.appendChild(divCompra);
         containerCompra.appendChild(divContainerCompra);
+
+         //---------- sweetAlert
+
+         const btn = document.getElementById(producto);
+
+         btn.addEventListener('click', () => {
+             Swal.fire({
+                 title: 'Estas seguro?',
+                 text: 'va a eliminar compra',
+                 icon: 'warning',
+                 showCancelButton: true,
+                 confirmButtonText: 'Eliminar',
+                 cancelButtonText: 'Cancelar'
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     eliminarCompra(producto);
+                     Swal.fire(
+                         'Eliminado',
+                         'La compra ha sido borrada',
+                         'success'
+                     )
+                 }
+             })
+         })
+         //---fin sweetAlert
     });
     //---------fin DOM ------
 }
@@ -148,17 +200,12 @@ const valorFormularioCompra = (e) => {
     renderCompras();
     //-------borra el texto que quedo en el formulario----
     formCompra.reset();
+    btnGuardarCompra.disabled = true;
 }
 
 //------se agrega un evento al form----
 formCompra.addEventListener('submit', valorFormularioCompra);
 renderCompras();
-
-///--------agrego un evento click------
-
-divContainerCompra.addEventListener('click', (e) => {
-    eliminarCompra(e.target.value);
-});
 
 //-----eliminar una Compra----------
 const eliminarCompra = (producto) => {
@@ -179,14 +226,15 @@ const inputTipoProducto = document.getElementById('inputTipoProducto');
 btnGuardarCompra.disabled = true;
 
 const validarFormCompra = () => {
-    if ((inputNombreCompra.value && inputNombreCompra.value !== '') &&
-     (inputTipoProducto.value && inputTipoProducto.value !== '')) {
-        btnGuardarCompra.disabled = false;
-    }
-    else {
-        btnGuardarCompra.disabled = true;
-    }
+    
+    const x = inputNombreCompra.value === '' ? true : false;
+    const y = inputTipoProducto.value === '' ? true : false;
+    btnGuardarCompra.disabled = x || y;
 };
 
 //-------------se agrega un evento al al form (validar formulario)---------
-formCompra.addEventListener('keypress', validarFormCompra);
+formCompra.addEventListener('keyup', validarFormCompra);
+
+//------practicando sweetAlert
+
+Swal.fire('practicamos con sweet Alert');
