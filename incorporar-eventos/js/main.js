@@ -242,15 +242,13 @@ const funcionFetch = () => {
     fetch('/productosMensuales.json')
         .then((response) => response.json())
         .then((data) => {
-            data.forEach((producto) => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <h4>${producto.nombreProducto}</h4>
-                    <p>${producto.tipoProducto}</p>
-                `
-                compraMensual.appendChild(li);
+            data.listaProductosMensual.forEach((producto) => {
+                arrayCompras.push(new Compras(producto.nombreProducto, producto.tipoProducto));
+                guardarComprasLocalStorage(arrayCompras);
+                renderCompras();
         });
     });
+    
 }
 
 //agrego evento para renderizar lista compras
