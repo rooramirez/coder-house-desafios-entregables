@@ -1,0 +1,20 @@
+{
+    "listaProductosMensual":[
+        {
+            "nombreProducto": "yogur firme",
+            "tipoProducto": "alimento"
+        },
+        {
+            "nombreProducto": "leche nido",
+            "tipoProducto": "alimento"
+        },
+        {
+            "nombreProducto": "pañales de dia",
+            "tipoProducto": "higiene"
+        }
+        {
+            "nombreProducto": "pañales de noche",
+            "tipoProducto": "higiene"
+        }
+    ]
+}

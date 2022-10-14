@@ -235,6 +235,25 @@ const validarFormCompra = () => {
 //-------------se agrega un evento al al form (validar formulario)---------
 formCompra.addEventListener('keyup', validarFormCompra);
 
-//------practicando sweetAlert
+//Rutas relativas-fetch
+const compraMensual = document.getElementById('comprasMensuales');
 
-Swal.fire('practicamos con sweet Alert');
+const funcionFetch = () => {
+    fetch('/productosMensuales.json')
+        .then((response) => response.json())
+        .then((data) => {
+            data.forEach((producto) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <h4>${producto.nombreProducto}</h4>
+                    <p>${producto.tipoProducto}</p>
+                `
+                compraMensual.appendChild(li);
+        });
+    });
+}
+
+//agrego evento para renderizar lista compras
+const btnCargarComprasMensuales = document.getElementById('cargarComprasMes');
+
+btnCargarComprasMensuales.addEventListener('click', funcionFetch);
