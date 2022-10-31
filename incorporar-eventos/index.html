@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
      <!-- Bootstrap CSS -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css">
      <!--luxon-->
      <script src="https://cdn.jsdelivr.net/npm/luxon@2.3.1/build/global/luxon.min.js"></script>
      <!--sweetAlert2-->
@@ -19,7 +18,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar bg-light">
+        <nav class="navbar bg-light" id="botonera">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">
                 <img src="./icons/familia.svg" alt="Logo familia" width="30" height="24" class="d-inline-block align-text-top">
@@ -27,41 +26,61 @@
             </div>
           </nav>
     </header>
-    <main class="container">
-        <h1 class="titulo">Armonía Familiar</h1>
-        <h3>Aplicacion web destinada a la organizacion familiar y division de las tareas equitativamente</h3>
-        <section id="tareas" class="container">
-            <h2>TAREAS</h2>
-            <form id="formTarea">
-                <label>nombre de la tarea:</label><br>
-                <input id="tareaNombre" type="text" name="nombreTarea"><br>
-                <label>descripcion de la tarea: </label><br>
-                <textarea name="descripcion" id="descripcionTarea" cols="22" rows="5"></textarea><br>
-                <label for="start"> Fecha limite: </label>
-                <input name="fechaTarea" type="date" id="fechaTarea" value="2022-10-06" max=" 2022-12-31" min="2022-10-01"> <br>
-                <button id="btnGuardarTarea" type="submit">Guardar Tarea</button>
-            </form>
-            <div id="divDeTareas"></div>
-        </section>
-        <section id="compras" class="container">
-            <h2>COMPRAS</h2>
-            <form id="formCompra">
-                <label>nombre del producto:</label><br>
-                <input id="inputNombreCompra" type="text" name="nombreProducto"><br>
-                <label>tipo de producto:</label><br>
-                <input id="inputTipoProducto" type="text" name="tipoProducto" ><br>
-                <button id="btnGuardarCompra" type="submit">Guardar Compra</button>
-            </form>
-            <div>
-                <ul id="comprasMensuales"></ul>
-                <button id="cargarComprasMes">Cargar Compra Mensual</button>
-            </div>
-            <div id="divDeCompras"></div>
-        </section>
+    <main class="container ">
+        <div>
+            <section id="title">
+                <h1 class="titulo">Armonía Familiar</h1>
+                <h3>Aplicacion web destinada a la organizacion familiar y division de las tareas equitativamente</h3>
+            </section>
+        </div>
+        <div class="">
+            <section id="tareas" class="container" >
+                <div id="cajaFormTarea col-md-4">
+                    <div class="card">
+                        <h2 class="card-header">TAREAS</h2>
+                        <form id="formTarea" >
+                            <label>nombre de la tarea:</label><br>
+                            <input id="tareaNombre" type="text" name="nombreTarea"><br>
+                            <label>descripcion de la tarea: </label><br>
+                            <textarea name="descripcion" id="descripcionTarea" cols="22" rows="5"></textarea><br>
+                            <label for="">Nivel de Importancia: </label>
+                            <select name="nivelImportancia" id="">
+                                <option value="baja">Baja</option>
+                                <option value="med">Media</option>
+                                <option value="alta">Alta</option>
+                            </select> <br> <br>
+                            <label for="start"> Fecha limite: </label>
+                            <input name="fechaTarea" type="date" id="fechaTarea" value="2022-10-06" max=" 2022-12-31" min="2022-10-01"> <br> <br>
+                            <button id="btnGuardarTarea" type="submit">Guardar Tarea</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="divDeTareas" class="col-md-8 "></div>
+            </section>
+            <section id="compras" class="container pantallaEnDos">
+                <h2 class="card-header">COMPRAS</h2>
+                <div class="col-md-4">
+                    <form id="formCompra">
+                        <label>nombre del producto:</label><br>
+                        <input id="inputNombreCompra" type="text" name="nombreProducto"><br>
+                        <label>tipo de producto:</label><br>
+                        <input id="inputTipoProducto" type="text" name="tipoProducto" ><br>
+                        <button id="btnGuardarCompra" type="submit">Guardar Compra</button>
+                        <button id="cargarComprasMes" type="button">Cargar Compra Mensual</button>
+                        <div id="fechaCargaCompra"></div>
+                    </form>
+                </div>
+                <div id="divDeCompras" class="col-md-8"></div>
+            </section>
+        </div>
+        
     </main>
-    <footer></footer>
+    <footer id="pie" class="footer container-fluid">
+
+    </footer>
 
     <script src="./js/constructor.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="./js/tareas.js"></script>
+    <script src="./js/compras.js"></script>
 </body>
 </html>

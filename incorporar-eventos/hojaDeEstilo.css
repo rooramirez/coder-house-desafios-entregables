@@ -1,4 +1,25 @@
 .elementoLista {
-    border: 1.5px solid;
+    border: 5px solid black;
+    margin-bottom: 5px;
+    padding: 5px;
+    margin-top: 15px;
 }
+
+
+.alta{
+    background-color: red;
+    color: white;
+}
+
+.med{
+    background-color: orange;
+    color: white;
+}
+
+.baja{
+    background-color: green;
+    color: white;
+}
+
+
 

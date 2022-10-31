@@ -2,19 +2,23 @@
     "listaProductosMensual":[
         {
             "nombreProducto": "yogur firme",
-            "tipoProducto": "alimento"
+            "tipoProducto": "alimento",
+            "compraMensual": true
         },
         {
             "nombreProducto": "leche nido",
-            "tipoProducto": "alimento"
+            "tipoProducto": "alimento",
+            "compraMensual": true
         },
         {
             "nombreProducto": "pañales de dia",
-            "tipoProducto": "higiene"
+            "tipoProducto": "higiene",
+            "compraMensual": true
         },
         {
             "nombreProducto": "pañales de noche",
-            "tipoProducto": "higiene"
+            "tipoProducto": "higiene",
+            "compraMensual": true
         }
     ]
 }
